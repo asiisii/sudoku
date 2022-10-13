@@ -1,0 +1,50 @@
+/* The Modal (background) */
+.modal-wrapper {
+  display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed; 
+	z-index: 1; 
+	left: 0;
+	top: 0;
+	width: 100vw; 
+	height: 100vh; 
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: white;
+  color: black;
+	margin: auto;
+	padding: 0;
+	width: 40%;
+}
+
+.modal-header {
+	padding: 2px 16px;
+	background-color: yellow;
+	color: red;
+}
+
+.modal-footer {
+	padding: 10px;
+	background-color: yellow;
+	color: white;
+}
+
+/* The Close Button */
+/* .close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+} */
