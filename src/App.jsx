@@ -24,6 +24,7 @@ const App = () => {
 	const [mistakes, setMistakes] = useState(0)
 	// const [showModal, setShowModal] = useState(false)
 	const [startNewGame, setStartNewGame] = useState(false)
+	const [isWinner, setIsWinner] = useState(false)
 
 	useEffect(() => {
 		setBoard(boardSetUp(gameMode, 0))
@@ -97,15 +98,33 @@ const App = () => {
 				e.target.classList.remove('incorrect')
 			}
 		}
-
 		setBoard(newBoard)
+
+		const flatBoard = newBoard.flat()
+		if (!flatBoard.includes('-') && !flatBoard.includes('')) {
+			console.log('congratulations!!!!')
+			setIsWinner(true)
+		}
 	}
 
 	return (
 		<div className='container'>
 			<h1 className='game-title'>Sudoku</h1>
 			<div className='board-wrapper'>
-				{mistakes === 3 && <Modal handleBtnClick={createNewGame} />}
+				{isWinner && (
+					<Modal
+						handleBtnClick={createNewGame}
+						message='You have succesffully completed the game!'
+						title='Congratulations!!'
+					/>
+				)}
+				{mistakes === 3 && (
+					<Modal
+						handleBtnClick={createNewGame}
+						message='You have made 3 mistakes and lost this game'
+						title='Game Over'
+					/>
+				)}
 				<div className='board'>{board.length > 0 && createBoard()}</div>
 				<div className='game-info'>
 					<h3 className='error-count'>Mistakes: {mistakes}/3</h3>
