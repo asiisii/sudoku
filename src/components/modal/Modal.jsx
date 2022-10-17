@@ -7,7 +7,6 @@ const Modal = ({ handleBtnClick , message, title}) => {
 		<div className='modal-wrapper'>
 			<div className='modal-content'>
 				<div className='modal-header'>
-					{/* <span className='close'>&times;</span> */}
 					<h1>{title}</h1>
 				</div>
 				<div className='modal-body'>
