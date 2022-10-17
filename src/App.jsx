@@ -82,6 +82,13 @@ const App = () => {
 		setStartNewGame(true)
 	}
 
+	const checkForWinner = (boardData) => {
+		const flatBoard = boardData.flat()
+		if (!flatBoard.includes('-') && !flatBoard.includes('')) {
+			setIsWinner(true)
+		}
+	}
+
 	const handleChange = (e, row, col) => {
 		const val = e.target.value
 		let newBoard = JSON.parse(JSON.stringify(board))
@@ -93,18 +100,12 @@ const App = () => {
 			) {
 				e.target.classList.add('incorrect')
 				setMistakes(mistakes + 1)
-				// if (mistakes === 2) isGameOver()
 			} else {
 				e.target.classList.remove('incorrect')
 			}
 		}
 		setBoard(newBoard)
-
-		const flatBoard = newBoard.flat()
-		if (!flatBoard.includes('-') && !flatBoard.includes('')) {
-			console.log('congratulations!!!!')
-			setIsWinner(true)
-		}
+		checkForWinner(newBoard)
 	}
 
 	return (
@@ -126,7 +127,7 @@ const App = () => {
 					/>
 				)}
 				<div className='board'>{board.length > 0 && createBoard()}</div>
-				<div className='game-info'>
+				<div className='controllers-wrapper'>
 					<h3 className='error-count'>Mistakes: {mistakes}/3</h3>
 				</div>
 			</div>
