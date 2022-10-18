@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { easyMode, easyModeAnswer } from './data'
+import { gameModes, solutions } from './data'
 import Modal from './components/modal/Modal'
 import './App.css'
 
@@ -17,8 +17,8 @@ const boardSetUp = (gameMode, modeIndex) => {
 }
 
 const App = () => {
-	const [gameMode, setGameMode] = useState(easyMode)
-	const [answer, setAnswer] = useState(easyModeAnswer)
+	const [gameMode, setGameMode] = useState('easy')
+	const [answer, setAnswer] = useState('easy')
 	const [board, setBoard] = useState([])
 	const [solution, setSolution] = useState([])
 	const [mistakes, setMistakes] = useState(0)
@@ -27,8 +27,8 @@ const App = () => {
 	const [isWinner, setIsWinner] = useState(false)
 
 	useEffect(() => {
-		setBoard(boardSetUp(gameMode, 0))
-		setSolution(boardSetUp(answer, 0))
+		setBoard(boardSetUp(gameModes[gameMode], 0))
+		setSolution(boardSetUp(solutions[answer], 0))
 	}, [])
 
 	const createBoard = () => {
@@ -48,13 +48,15 @@ const App = () => {
                         ${(col === 2 || col === 5) && 'left-vertical-line'} 
                         ${(col === 3 || col === 6) && 'right-vertical-line'}
                         ${
-													boardSetUp(gameMode, 0)[row][col] !== '-' &&
-													'disabled'
+													boardSetUp(gameModes[gameMode], 0)[row][col] !==
+														'-' && 'disabled'
 												}
                         `}
 												onChange={e => handleChange(e, row, col)}
 												value={board[row][col] === '-' ? '' : board[row][col]}
-												disabled={boardSetUp(gameMode, 0)[row][col] !== '-'}
+												disabled={
+													boardSetUp(gameModes[gameMode], 0)[row][col] !== '-'
+												}
 											/>
 										</td>
 									)
@@ -76,13 +78,13 @@ const App = () => {
 		document
 			.querySelectorAll('input')
 			.forEach(el => el.classList.remove('incorrect'))
-		setBoard(boardSetUp(gameMode, 1))
-		setSolution(boardSetUp(answer, 1))
+		setBoard(boardSetUp(gameModes[gameMode], 1))
+		setSolution(boardSetUp(solutions[answer], 1))
 		setMistakes(0)
 		setStartNewGame(true)
 	}
 
-	const checkForWinner = (boardData) => {
+	const checkForWinner = boardData => {
 		const flatBoard = boardData.flat()
 		if (!flatBoard.includes('-') && !flatBoard.includes('')) {
 			setIsWinner(true)
@@ -108,6 +110,12 @@ const App = () => {
 		checkForWinner(newBoard)
 	}
 
+	const updateGameMode = e => {
+		console.log(e.target.value)
+		setGameMode(e.target.value)
+		setAnswer(e.target.value)
+	}
+
 	return (
 		<div className='container'>
 			<h1 className='game-title'>Sudoku</h1>
@@ -129,6 +137,37 @@ const App = () => {
 				<div className='board'>{board.length > 0 && createBoard()}</div>
 				<div className='controllers-wrapper'>
 					<h3 className='error-count'>Mistakes: {mistakes}/3</h3>
+					<div className='mode-wrapper'>
+						<input
+							type='radio'
+							value='easy'
+							id='easy'
+							onChange={updateGameMode}
+							name='gender'
+							checked={gameMode === 'easy'}
+						/>
+						<label htmlFor='easy'>Easy</label>
+
+						<input
+							type='radio'
+							value='medium'
+							id='medium'
+							onChange={updateGameMode}
+							name='gender'
+							checked={gameMode === 'medium'}
+						/>
+						<label htmlFor='medium'>Medium</label>
+
+						<input
+							type='radio'
+							value='hard'
+							id='hard'
+							onChange={updateGameMode}
+							name='gender'
+							checked={gameMode === 'hard'}
+						/>
+						<label htmlFor='hard'>Hard</label>
+					</div>
 				</div>
 			</div>
 		</div>
