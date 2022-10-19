@@ -112,8 +112,11 @@ const App = () => {
 
 	const updateGameMode = e => {
 		console.log(e.target.value)
-		setGameMode(e.target.value)
-		setAnswer(e.target.value)
+		const mode = e.target.value
+		setGameMode(mode)
+		setAnswer(mode)
+		setBoard(boardSetUp(gameModes[mode], 0))
+		setSolution(boardSetUp(solutions[mode], 0))
 	}
 
 	return (
