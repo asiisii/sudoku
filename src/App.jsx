@@ -25,11 +25,16 @@ const App = () => {
 	// const [showModal, setShowModal] = useState(false)
 	const [startNewGame, setStartNewGame] = useState(false)
 	const [isWinner, setIsWinner] = useState(false)
+	const [selectBoard, setSelectBoard] = useState(null)
 
 	useEffect(() => {
-		setBoard(boardSetUp(gameModes[gameMode], 0))
-		setSolution(boardSetUp(solutions[answer], 0))
+		const num = getRandomNum()
+		setSelectBoard(getRandomNum)
+		setBoard(boardSetUp(gameModes[gameMode], num))
+		setSolution(boardSetUp(solutions[answer], num))
 	}, [])
+
+	const getRandomNum = () => Math.floor(Math.random() * 5)
 
 	const createBoard = () => {
 		return (
@@ -48,14 +53,17 @@ const App = () => {
                         ${(col === 2 || col === 5) && 'left-vertical-line'} 
                         ${(col === 3 || col === 6) && 'right-vertical-line'}
                         ${
-													boardSetUp(gameModes[gameMode], 0)[row][col] !==
-														'-' && 'disabled'
+													boardSetUp(gameModes[gameMode], selectBoard)[row][
+														col
+													] !== '-' && 'disabled'
 												}
                         `}
 												onChange={e => handleChange(e, row, col)}
 												value={board[row][col] === '-' ? '' : board[row][col]}
 												disabled={
-													boardSetUp(gameModes[gameMode], 0)[row][col] !== '-'
+													boardSetUp(gameModes[gameMode], selectBoard)[row][
+														col
+													] !== '-'
 												}
 											/>
 										</td>
@@ -78,8 +86,8 @@ const App = () => {
 		document
 			.querySelectorAll('input')
 			.forEach(el => el.classList.remove('incorrect'))
-		setBoard(boardSetUp(gameModes[gameMode], 1))
-		setSolution(boardSetUp(solutions[answer], 1))
+		setBoard(boardSetUp(gameModes[gameMode], selectBoard))
+		setSolution(boardSetUp(solutions[answer], selectBoard))
 		setMistakes(0)
 		setStartNewGame(true)
 	}
@@ -111,12 +119,13 @@ const App = () => {
 	}
 
 	const updateGameMode = e => {
-		console.log(e.target.value)
+		const num = getRandomNum()
 		const mode = e.target.value
 		setGameMode(mode)
 		setAnswer(mode)
-		setBoard(boardSetUp(gameModes[mode], 0))
-		setSolution(boardSetUp(solutions[mode], 0))
+		setSelectBoard(num)
+		setBoard(boardSetUp(gameModes[mode], num))
+		setSolution(boardSetUp(solutions[mode], num))
 	}
 
 	return (
