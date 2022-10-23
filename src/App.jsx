@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { gameModes, solutions } from './data'
+import { gameModes, solutions, sudokuRule } from './data'
+import RadioButton from './components/RadioButton'
 import Modal from './components/modal/Modal'
 import './App.css'
 
@@ -150,35 +151,33 @@ const App = () => {
 				<div className='controllers-wrapper'>
 					<h3 className='error-count'>Mistakes: {mistakes}/3</h3>
 					<div className='mode-wrapper'>
-						<input
+						<RadioButton
 							type='radio'
 							value='easy'
 							id='easy'
-							onChange={updateGameMode}
-							name='gender'
+							radioHandler={updateGameMode}
+							name='easy'
 							checked={gameMode === 'easy'}
+							label='Easy'
 						/>
-						<label htmlFor='easy'>Easy</label>
-
-						<input
+						<RadioButton
 							type='radio'
 							value='medium'
 							id='medium'
-							onChange={updateGameMode}
-							name='gender'
+							radioHandler={updateGameMode}
+							name='medium'
 							checked={gameMode === 'medium'}
+							label='Medium'
 						/>
-						<label htmlFor='medium'>Medium</label>
-
-						<input
+						<RadioButton
 							type='radio'
 							value='hard'
 							id='hard'
-							onChange={updateGameMode}
-							name='gender'
+							radioHandler={updateGameMode}
+							name='hard'
 							checked={gameMode === 'hard'}
+							label='Hard'
 						/>
-						<label htmlFor='hard'>Hard</label>
 					</div>
 				</div>
 			</div>
