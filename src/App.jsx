@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { gameModes, solutions, sudokuRule } from './data'
 import RadioButton from './components/RadioButton'
+import Button from './components/Button'
 import Modal from './components/modal/Modal'
 import './App.css'
 
@@ -129,6 +130,8 @@ const App = () => {
 		setSolution(boardSetUp(solutions[mode], num))
 	}
 
+	const openExternalPage = () => window.open(sudokuRule, '_blank')
+
 	return (
 		<div className='container'>
 			<h1 className='game-title'>Sudoku</h1>
@@ -149,6 +152,7 @@ const App = () => {
 				)}
 				<div className='board'>{board.length > 0 && createBoard()}</div>
 				<div className='controllers-wrapper'>
+					<Button label='How to play Sudoku?' handleClick={openExternalPage} />
 					<h3 className='error-count'>Mistakes: {mistakes}/3</h3>
 					<div className='mode-wrapper'>
 						<RadioButton
